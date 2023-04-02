@@ -1,0 +1,22 @@
+<div class="grid">
+    <div class="col-12 flex justify-content-between align-items-center">
+        <div class="text-2xl font-semibold">Sculptures Table</div>
+        <button
+            (click)="createSculpture()"
+            label="Create"
+            pButton
+            icon="pi pi-plus"
+            class="p-button-success text-lh font-semibold"
+        ></button>
+    </div>
+    <div class="col-12">
+        <flex-table
+            #sculpturesTable
+            [config]="sculpturesFlexTableConfig"
+        >
+            <div empty class="p-5 flex justify-content-center align-items-center">
+                <h1>You haven't added any sculptures yet!</h1>
+            </div>
+        </flex-table>
+    </div>
+</div>

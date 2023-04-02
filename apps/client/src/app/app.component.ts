@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'google-mvp-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: 'client-root',
+  template: '<router-outlet></router-outlet>',
 })
 export class AppComponent {
-  title = 'client';
 }
