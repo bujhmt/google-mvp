@@ -22,4 +22,14 @@ export class CreateSculptureDto {
     @IsOptional()
     @MinLength(1)
     description?: string;
+
+    @IsString()
+    @IsOptional()
+    @MinLength(1)
+    history?: string;
+
+    @IsString()
+    @IsOptional()
+    @MinLength(1)
+    review?: string;
 }

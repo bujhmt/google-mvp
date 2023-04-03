@@ -1,4 +1,4 @@
-import {Module} from '@nestjs/common';
+import {Module, OnModuleInit} from '@nestjs/common';
 import {SculpturesService} from './services';
 import {SculpturesController} from './controllers';
 
@@ -10,5 +10,13 @@ import {SculpturesController} from './controllers';
         SculpturesService,
     ],
 })
-export class SculpturesModule {
+export class SculpturesModule implements OnModuleInit {
+    constructor(
+        private readonly sculpturesService: SculpturesService,
+    ) {
+    }
+
+    async onModuleInit() {
+        await this.sculpturesService.initializeIndex();
+    }
 }

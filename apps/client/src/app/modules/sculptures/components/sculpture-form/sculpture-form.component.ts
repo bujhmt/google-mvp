@@ -50,6 +50,12 @@ export class SculptureFormComponent {
             description: ['', [
                 Validators.minLength(1)
             ]],
+            history: ['', [
+                Validators.minLength(1)
+            ]],
+            review: ['', [
+                Validators.minLength(1)
+            ]],
             createdAt: [new Date()],
         })
     }

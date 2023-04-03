@@ -1,4 +1,4 @@
-import {BadRequestException, Body, Controller, Delete, Get, Param, Post, Query} from '@nestjs/common';
+import {BadRequestException, Body, Controller, Delete, Get, Logger, Param, Post, Query} from '@nestjs/common';
 import {Sculpture} from '@google-mvp/shared/model';
 import {SculpturesService} from '../services';
 import {CreateSculptureDto, GetSculpturesDto} from '../dto';
@@ -7,6 +7,7 @@ import {BoolQueryBuilder} from '../../elasticsearch/query-builders';
 
 @Controller('/sculptures')
 export class SculpturesController {
+    private readonly logger = new Logger('Query');
     private readonly filtersTransformer = new FiltersTransformer<Sculpture>();
     private readonly queryBuilder = new BoolQueryBuilder<Sculpture>();
 
@@ -16,14 +17,12 @@ export class SculpturesController {
     }
 
     @Get('/')
-    public async getSculptures(@Query() {take, skip, filters}: GetSculpturesDto): Promise<[Sculpture[], number]> {
+    public getSculptures(@Query() {take, skip, filters}: GetSculpturesDto): Promise<[Sculpture[], number]> {
         const rules = this.filtersTransformer.transform(filters);
         const query = this.queryBuilder.getQuery(rules);
-        console.log(JSON.stringify(query, null, 2));
+        this.logger.log(query);
 
-        const [sculptures, total] = await this.sculpturesService.getSculptures(query, take, skip);
-
-        return [sculptures, total];
+        return this.sculpturesService.getSculptures(query, take, skip);
     }
 
     @Get('/:id')

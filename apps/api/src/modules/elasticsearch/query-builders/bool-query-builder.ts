@@ -11,6 +11,7 @@ import {LteQueryBuilder} from './lte.query-builder';
 import {GtQueryBuilder} from './gt.query-builder';
 import {GteQueryBuilder} from './gte.query-builder';
 import {InQueryBuilder} from './in.query-builder';
+import {MatchQueryBuilder} from './match.query-builder';
 
 export class BoolQueryBuilder<TEntity> {
     private readonly matchModeAdaptersMap: Record<string, QueryBuilder<TEntity>> = {
@@ -28,6 +29,7 @@ export class BoolQueryBuilder<TEntity> {
         'dateAfter': new GtQueryBuilder(),
         'dateIs': new EqualsQueryBuilder(),
         'in': new InQueryBuilder(),
+        'match': new MatchQueryBuilder(),
     };
 
     public getQuery(filters: Filter<TEntity>[]): QueryDslQueryContainer {
