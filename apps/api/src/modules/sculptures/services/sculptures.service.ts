@@ -2,6 +2,7 @@ import {Injectable} from '@nestjs/common';
 import {Client} from '@elastic/elasticsearch';
 import {Sculpture} from '@google-mvp/shared/model';
 import {InjectClient} from '../../elasticsearch/decorators';
+import {QueryDslQueryContainer} from '@elastic/elasticsearch/lib/api/types';
 
 @Injectable()
 export class SculpturesService {
@@ -12,17 +13,17 @@ export class SculpturesService {
     ) {
     }
 
-    public async getSculptures(size: number, from = 0): Promise<[Sculpture[], number]> {
-        const {hits: {hits, total}} = await this.elasticsearchClient.search<Sculpture>({
+    public async getSculptures(query?: QueryDslQueryContainer, size = 100, from = 0): Promise<[Sculpture[], number]> {
+        const response = await this.elasticsearchClient.search<Sculpture>({
             index: this.index,
+            query,
             from,
             size,
         });
 
-        return [
-            hits.map(({_source}) => _source),
-            typeof total === 'number' ? total : total.value
-        ];
+        const {hits: {hits, total}} = response;
+
+        return [hits.map(({_source}) => _source), typeof total === 'number' ? total : total.value];
     }
 
     public async getSculptureById(id: string): Promise<Sculpture | undefined> {

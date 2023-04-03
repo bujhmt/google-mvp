@@ -64,12 +64,12 @@ export class SculpturesPage {
                 frozen: false,
             },
         ],
-        loader: async ({first, rows}) => {
+        loader: async ({first, rows, filters}) => {
             const [sculptures, total] = await this.sculpturesService.getSculptures({
+                filters,
                 skip: first,
                 take: rows,
-            })
-
+            });
 
             return [sculptures, total];
         }

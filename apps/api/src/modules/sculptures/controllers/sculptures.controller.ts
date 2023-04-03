@@ -2,17 +2,26 @@ import {BadRequestException, Body, Controller, Delete, Get, Param, Post, Query} 
 import {Sculpture} from '@google-mvp/shared/model';
 import {SculpturesService} from '../services';
 import {CreateSculptureDto, GetSculpturesDto} from '../dto';
+import {FiltersTransformer} from '../../elasticsearch/transformers';
+import {BoolQueryBuilder} from '../../elasticsearch/query-builders';
 
 @Controller('/sculptures')
 export class SculpturesController {
+    private readonly filtersTransformer = new FiltersTransformer<Sculpture>();
+    private readonly queryBuilder = new BoolQueryBuilder<Sculpture>();
+
     constructor(
         private readonly sculpturesService: SculpturesService,
     ) {
     }
 
     @Get('/')
-    public async getSculptures(@Query() {take, skip}: GetSculpturesDto): Promise<[Sculpture[], number]> {
-        const [sculptures, total] = await this.sculpturesService.getSculptures(take, skip);
+    public async getSculptures(@Query() {take, skip, filters}: GetSculpturesDto): Promise<[Sculpture[], number]> {
+        const rules = this.filtersTransformer.transform(filters);
+        const query = this.queryBuilder.getQuery(rules);
+        console.log(JSON.stringify(query, null, 2));
+
+        const [sculptures, total] = await this.sculpturesService.getSculptures(query, take, skip);
 
         return [sculptures, total];
     }
