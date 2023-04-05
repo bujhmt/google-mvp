@@ -1,0 +1,122 @@
+<div class="grid">
+    <div class="col-12 flex justify-content-between align-items-center">
+        <div class="text-2xl font-semibold">Shows</div>
+        <button
+            (click)="createShow()"
+            label="Create"
+            pButton
+            icon="pi pi-plus"
+            class="p-button-success text-lh font-semibold"
+        ></button>
+    </div>
+    <div class="col-12">
+        <h2>Filters</h2>
+        <div class="grid">
+            <div class="col-6 flex flex-column">
+                <input
+                    [formControl]="filtersForm.controls.name"
+                    pInputText
+                    placeholder="Filter by name"
+                    class="w-full m-1"
+                >
+                <input
+                    [formControl]="filtersForm.controls.fuzzyName"
+                    pInputText
+                    placeholder="Filter fuzzy by name"
+                    class="w-full m-1"
+                >
+                <div class="flex align-items-center">
+                    <p-inputNumber
+                        [formControl]="filtersForm.controls.costGte"
+                        placeholder="Cost >"
+                        styleClass="w-full m-1"
+                    >
+                    </p-inputNumber>
+                    <p-inputNumber
+                        [formControl]="filtersForm.controls.costLte"
+                        placeholder="Cost <"
+                        styleClass="w-full m-1"
+                    >
+                    </p-inputNumber>
+                </div>
+                <div class="flex align-items-center">
+                    <p-calendar
+                        [formControl]="filtersForm.controls.dateAfter"
+                        placeholder="Date >"
+                        styleClass="w-full m-1"
+                    >
+                    </p-calendar>
+                    <p-inputNumber
+                        [formControl]="filtersForm.controls.dateBefore"
+                        placeholder="Date <"
+                        styleClass="w-full m-1"
+                    >
+                    </p-inputNumber>
+                </div>
+                <p-chips
+                    [formControl]="filtersForm.controls.actors"
+                    placeholder="Actors"
+                >
+                </p-chips>
+            </div>
+            <div class="col-6">
+                <input
+                    [formControl]="filtersForm.controls.description"
+                    pInputText
+                    placeholder="Full text search description"
+                    class="w-full m-1"
+                >
+                <input
+                    [formControl]="filtersForm.controls.critics"
+                    pInputText
+                    placeholder="Full text search critics"
+                    class="w-full m-1"
+                >
+                <input
+                    [formControl]="filtersForm.controls.annotation"
+                    pInputText
+                    placeholder="Full text search annotation"
+                    class="w-full m-1"
+                >
+            </div>
+            <div class="col-12 flex align-items-center justify-content-between">
+                <button
+                    [disabled]="!filtersForm.dirty"
+                    (click)="resetFilters()"
+                    label="Reset Filters"
+                    pButton
+                    icon="pi pi-trash"
+                    class="p-button-danger m-1"
+                ></button>
+                <button
+                    (click)="fetchShows()"
+                    [disabled]="!filtersForm.dirty || filtersForm.invalid"
+                    label="Filter"
+                    pButton
+                    icon="pi pi-check"
+                    class="p-button-success m-1"
+                ></button>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="grid">
+            <div *ngFor="let show of shows" class="col-4">
+                <div class="flex flex-column border-round border-1 bg-gray-100 p-2 text-lg">
+                    <h3>{{show.name}}</h3>
+                    <div class="p-1">Date: {{show.date}}</div>
+                    <div class="p-1">Cost: {{show.cost}}</div>
+                    <div class="p-1">Actors: {{show.actors}}</div>
+                    <div class="p-1">Description: {{show.description}}</div>
+                    <div class="p-1">Critics: {{show.critics}}</div>
+                    <div class="p-1">Annotation: {{show.annotation}}</div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!shows.length">
+            <div class="p-5 text-2xl font-bold flex align-items-center justify-content-center">
+                Shows not found!
+            </div>
+        </div>
+    </div>
+</div>

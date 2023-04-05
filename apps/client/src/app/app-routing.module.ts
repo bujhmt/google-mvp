@@ -6,8 +6,8 @@ import {RouterModule} from '@angular/router';
         RouterModule.forRoot(
             [
                 {
-                    path: 'sculptures',
-                    loadChildren: () => import('./modules/sculptures/sculptures.module').then((m) => m.SculpturesModule),
+                    path: 'shows',
+                    loadChildren: () => import('./modules/shows/shows.module').then((m) => m.ShowsModule),
                 },
                 {
                     path: 'terms',
@@ -15,7 +15,7 @@ import {RouterModule} from '@angular/router';
                 },
                 {
                     path: '**',
-                    redirectTo: 'terms',
+                    redirectTo: 'shows',
                 },
             ],
             {scrollPositionRestoration: 'enabled'},

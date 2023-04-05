@@ -15,9 +15,6 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
-            "@google-mvp/client/ui-flex-table": [
-                "libs/client/ui-flex-table/src/index.ts"
-            ],
             "@google-mvp/shared/model": ["libs/shared/model/src/index.ts"]
         }
     },

@@ -1,0 +1,96 @@
+<div class="grid">
+    <div class="col-12 flex flex-column">
+        <div class="m-1 flex flex-column">
+            <span class="mb-1">Name</span>
+            <input
+                [formControl]="showForm.controls.name"
+                placeholder="Show name..."
+                pInputText
+                class="w-full"
+            >
+        </div>
+        <div class="m-1 flex flex-column">
+            <span class="mb-1">Actors</span>
+            <p-chips
+                [formControl]="showForm.controls.actors"
+                [minlength]="1"
+                placeholder="Actors..."
+                inputStyleClass="w-full"
+                styleClass="w-full"
+            ></p-chips>
+        </div>
+        <div class="m-1 flex flex-column">
+            <span class="mb-1">Date</span>
+            <p-calendar
+                [formControl]="showForm.controls.date"
+                dateFormat="dd/MM/yy"
+                styleClass="w-full"
+            ></p-calendar>
+        </div>
+        <div class="m-1 flex flex-column">
+            <span class="mb-1">Cost</span>
+            <p-inputNumber
+                [formControl]="showForm.controls.cost"
+                [min]="1"
+                [allowEmpty]="true"
+                [showClear]="true"
+                placeholder="Cost"
+                styleClass="w-full"
+            >
+            </p-inputNumber>
+        </div>
+    </div>
+    <div class="col-12 md:col-6">
+        <div class="m-1 flex flex-column">
+            <span class="mb-1">Description</span>
+            <textarea
+                [formControl]="showForm.controls.description"
+                placeholder="Description"
+                pInputTextarea
+                cols="30"
+                rows="3"
+                class="w-full"
+            ></textarea>
+        </div>
+        <div class="m-1 flex flex-column">
+            <span class="mb-1">Critics</span>
+            <textarea
+                [formControl]="showForm.controls.critics"
+                placeholder="Critics"
+                pInputTextarea
+                cols="30"
+                rows="3"
+                class="w-full"
+            ></textarea>
+        </div>
+        <div class="m-1 flex flex-column">
+            <span class="mb-1">Annotation</span>
+            <textarea
+                [formControl]="showForm.controls.annotation"
+                placeholder="Annotation"
+                pInputTextarea
+                cols="30"
+                rows="3"
+                class="w-full"
+            ></textarea>
+        </div>
+    </div>
+    <div class="col-12 flex justify-content-between align-items-center">
+        <button
+            [disabled]="!showForm.dirty"
+            (click)="reset()"
+            label="Reset"
+            pButton
+            icon="pi pi-trash"
+            class="p-button-danger m-1"
+        ></button>
+        <button
+            (click)="submit()"
+            [disabled]="!showForm.dirty || showForm.invalid"
+            label="Submit"
+            pButton
+            icon="pi pi-check"
+            class="p-button-success m-1"
+        ></button>
+    </div>
+</div>

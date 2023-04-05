@@ -1,1 +1,1 @@
-export * from './sculpture.interface';
+export * from './show.interface';
