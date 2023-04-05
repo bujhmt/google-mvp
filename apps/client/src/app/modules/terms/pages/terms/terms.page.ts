@@ -17,7 +17,7 @@ export class TermsPage implements OnInit {
 
     public query = '';
     public resultDocuments: Document[] = [];
-    public indexTerms: string[] = ['test', 'cat', 'dog'];
+    public indexTerms: string[] = ['test', 'cat', 'god'];
     public documents: Document[] = [
         {
             title: 'QA job',
@@ -34,6 +34,10 @@ export class TermsPage implements OnInit {
         {
             title: 'Hello world!',
             content: 'Hello my name is igor!',
+        },
+        {
+            title: 'More cats?',
+            content: 'You should test adopting cat for sure! - Igor',
         }
     ];
 
