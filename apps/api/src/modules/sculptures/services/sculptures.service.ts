@@ -52,8 +52,6 @@ export class SculpturesService {
     }
 
     public async initializeIndex() {
-        // await this.elasticsearchClient.indices.delete({index: this.index});
-
         if (await this.elasticsearchClient.indices.exists({index: this.index})) {
             this.logger.warn(`${this.index} index already exists! Skipped.`);
             return;

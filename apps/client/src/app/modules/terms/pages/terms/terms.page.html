@@ -1,0 +1,78 @@
+<div class="grid">
+    <div class="col-8">
+        <div class="flex flex-column">
+            <h2>Index Terms</h2>
+            <p-chips
+                [(ngModel)]="indexTerms"
+                [showClear]="true"
+                [disabled]="documents.length !== 0"
+                placeholder="Index Terms"
+                styleClass="text-xl font-semibold"
+                inputStyleClass="text-xl font-semibold"
+            ></p-chips>
+            <p-divider></p-divider>
+            <div class="flex align-items-center justify-content-between">
+                <h2>Queries</h2>
+                    <p-selectButton
+                        [options]="searchModelOptions"
+                        [(ngModel)]="currentSearchModel"
+                        optionLabel="label"
+                        optionValue="model"
+                    ></p-selectButton>
+            </div>
+            <div class="flex align-items-center">
+                <input
+                    [(ngModel)]="query"
+                    pInputText
+                    placeholder="Search query"
+                    class="w-full text-xl font-semibold m-1"
+                >
+                <button
+                    [disabled]="query.length === 0"
+                    (click)="search()"
+                    pButton
+                    label="Search"
+                    iconPos="right"
+                    icon="pi pi-search m-1"
+                ></button>
+            </div>
+            <p-scroller class="block m-1" [itemSize]="100" [items]="resultDocuments" [scrollHeight]="'70vh'" styleClass="border-1 surface-border">
+                <ng-template pTemplate="item" let-document let-options="options">
+                    <div class="flex flex-column p-2" [ngClass]="{ 'surface-ground' : options.odd }" style="height: 50px;">
+                        <span class="text-xl font-semibold">{{document.title}} ({{document.similarityScore || 1}})</span>
+                        <div>{{document.content}}</div>
+                    </div>
+                </ng-template>
+            </p-scroller>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="flex align-items-center justify-content-between">
+            <h2>Documents</h2>
+            <div class="flex align-items-center">
+                <button
+                    (click)="createDocument()"
+                    label="Create"
+                    pButton
+                    icon="pi pi-plus"
+                    class="p-button-success text-lg font-semibold m-1"
+                ></button>
+                <button
+                    (click)="resetDocuments()"
+                    pButton
+                    icon="pi pi-trash"
+                    class="p-button-danger m-1"
+                ></button>
+            </div>
+        </div>
+        <p-scroller [itemSize]="100" [items]="documents" [scrollHeight]="'90vh'" styleClass="border-1 surface-border">
+            <ng-template pTemplate="item" let-document let-options="options">
+                <div class="flex flex-column p-2" [ngClass]="{ 'surface-ground' : options.odd }" style="height: 50px;">
+                    <span class="text-xl font-semibold">{{document.title}}</span>
+                    <div>{{document.content}}</div>
+                </div>
+            </ng-template>
+        </p-scroller>
+    </div>
+</div>
+

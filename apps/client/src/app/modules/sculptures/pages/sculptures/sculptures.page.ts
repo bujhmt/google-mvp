@@ -2,8 +2,8 @@ import {Component, ViewChild} from '@angular/core';
 import {FlexTable, FlexTableConfig} from '@google-mvp/client/ui-flex-table';
 import {Sculpture} from '@google-mvp/shared/model';
 import {DialogService} from 'primeng/dynamicdialog';
-import {SculptureFormComponent} from '../../components';
 import {firstValueFrom} from 'rxjs';
+import {SculptureFormComponent} from '../../components';
 import {CreateSculpturePayload} from '../../payloads';
 import {SculpturesService} from '../../services';
 
