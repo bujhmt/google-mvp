@@ -15,7 +15,7 @@ import {RouterModule} from '@angular/router';
                 },
                 {
                     path: '**',
-                    redirectTo: 'shows',
+                    redirectTo: 'terms',
                 },
             ],
             {scrollPositionRestoration: 'enabled'},

@@ -6,32 +6,30 @@ export class VectorSpaceSearchModel implements SearchModel {
     private readonly tokenizer = new Tokenizer();
     private readonly documentsFrequenciesMap = new Map<Document, Record<string, number>>();
     private readonly documentsVectors = new Map<Document, number[]>();
-    private readonly k = 0.5;
 
-    index(document: Document, indexTerms: string[]): void {
-        const tokens = this.tokenizer.tokenize(document.content);
+    index(newDocument: Document, indexTerms: string[]): void {
+        const tokens = this.tokenizer.tokenize(newDocument.content);
 
-        const documentTermFrequency = tokens.reduce<Record<string, number>>(
+        const newDocumentTermFrequency = tokens.reduce<Record<string, number>>(
             (acc, token) => ({...acc, [token]: (acc[token] || 0) + 1}),
             {},
         );
-        this.documentsFrequenciesMap.set(document, documentTermFrequency);
+        this.documentsFrequenciesMap.set(newDocument, newDocumentTermFrequency);
 
-        const maxTermFrequency = Math.max(...Object.values(documentTermFrequency));
-        const maxDocumentsTermFrequency = Math.max(...tokens.map((token) => this.getDocumentsTermFrequency(token)));
+        this.documentsVectors.clear();
+        for (const [document, documentTermFrequency] of this.documentsFrequenciesMap.entries()) {
+            const documentVector: number[] = [];
 
-        const documentVector: number[] = [];
-        for (const term of indexTerms.map((term) => term.trim().toLowerCase())) {
-            // tf, double normalization
-            const tf = this.k + 0.5 * (documentTermFrequency[term] || 0) / maxTermFrequency;
+            for (const term of indexTerms.map((term) => term.trim().toLowerCase())) {
+                const tf = Math.log(1 + (documentTermFrequency[term] || 0));
+                const idf = Math.log(this.documentsFrequenciesMap.size / (1 + this.getDocumentsTermFrequency(term))) + 1;
 
-            // idf
-            const idf = Math.log(maxDocumentsTermFrequency / (1 + this.getDocumentsTermFrequency(term)));
+                documentVector.push(tf * idf);
+            }
 
-            documentVector.push(tf * idf);
+            console.log('Document vector: ', documentVector)
+            this.documentsVectors.set(document, documentVector);
         }
-
-        this.documentsVectors.set(document, documentVector);
     }
 
     private getDocumentsTermFrequency(term: string): number {
@@ -68,15 +66,10 @@ export class VectorSpaceSearchModel implements SearchModel {
             {},
         );
 
-        const maxTermFrequency = Math.max(...Object.values(queryTermFrequency));
-        const maxDocumentsTermFrequency = Math.max(...terms.map((token) => this.getDocumentsTermFrequency(token)));
-
         const queryVector: number[] = [];
         for (const term of terms) {
-            // tf, double normalization
-            const tf = this.k + 0.5 * (queryTermFrequency[term] || 0) / maxTermFrequency;
-            // idf
-            const idf = Math.log(maxDocumentsTermFrequency / this.getDocumentsTermFrequency(term));
+            const tf = Math.log(1 + (queryTermFrequency[term] || 0));
+            const idf = Math.log(Object.keys(this.documentsFrequenciesMap).length / (1 + this.getDocumentsTermFrequency(term))) + 1;
             queryVector.push(tf * idf);
         }
 

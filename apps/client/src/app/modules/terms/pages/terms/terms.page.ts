@@ -17,29 +17,8 @@ export class TermsPage implements OnInit {
 
     public query = '';
     public resultDocuments: Document[] = [];
-    public indexTerms: string[] = ['test', 'cat', 'god'];
-    public documents: Document[] = [
-        {
-            title: 'QA job',
-            content: 'how to test a lot of code? Let me explain!',
-        },
-        {
-            title: 'Cats anywhere!',
-            content: 'Everybody adores cat! You should love your kitty!',
-        },
-        {
-            title: 'Rubbish document',
-            content: 'aljkdfk srjkfdsjhf srkfhuvusjf sejfuhjsueufd srhfbvjshbrjf'
-        },
-        {
-            title: 'Hello world!',
-            content: 'Hello my name is igor!',
-        },
-        {
-            title: 'More cats?',
-            content: 'You should test adopting cat for sure! - Igor',
-        }
-    ];
+    public indexTerms: string[] = [];
+    public documents: Document[] = [];
 
     public currentSearchModel: string = StandardBooleanSearchModel.name;
     public searchModelOptions = [
